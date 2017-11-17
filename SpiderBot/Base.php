@@ -11,18 +11,21 @@ class Base
 
     protected $config;
 
+    protected $server_addr;
+
     /**
      * Base constructor.
      */
     public function __construct()
     {
+        $this->server_addr = isset($_SERVER['SERVER_ADDR'])?$_SERVER['SERVER_ADDR']:getHostByName(getHostName());
+        $this->config = json_decode( file_get_contents(__DIR__.'/../config.json' ) );
         $this->client = new Client([
             'http_errors' => false,
             'headers' => [
-                'User-Agent' => 'FileSearch.me Bot v'.$this->config->bot_version.' '.md5($_SERVER['SERVER_ADDR'])
+                'User-Agent' => 'FileSearch.me Bot v'.$this->config->bot_version.' '.md5($this->server_addr)
             ]
         ]);
-        $this->config = json_decode( file_get_contents(__DIR__.'/../config.json' ) );
     }
 
     /**
@@ -37,7 +40,8 @@ class Base
 
     public function run()
     {
-        if( isset( $_GET['key'] ) && $_GET['key'] == $this->config->unique_key )
+        global $argv;
+        if( ( isset( $argv ) && $argv[1] == $this->config->unique_key ) || ( isset( $_GET['key'] ) && $_GET['key'] == $this->config->unique_key ) )
         {
             $work = new Work;
             $work->fire();
@@ -49,8 +53,8 @@ class Base
                 [
                     'bot' => 'FileSearch.me',
                     'version' => $this->config->bot_version,
-                    'identifier' => md5($_SERVER['SERVER_ADDR']),
-                    'user_agent' => 'FileSearch.me Bot v'.$this->config->bot_version.' '.md5($_SERVER['SERVER_ADDR'])
+                    'identifier' => md5($this->server_addr),
+                    'user_agent' => 'FileSearch.me Bot v'.$this->config->bot_version.' '.md5($this->server_addr)
                 ],
                 JSON_PRETTY_PRINT
             );

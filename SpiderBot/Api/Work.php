@@ -197,7 +197,7 @@ class Work extends Base
             ],
             'form_params' => [
                 'version' => $this->config->bot_version,
-                'identifier' => md5($_SERVER['SERVER_ADDR']),
+                'identifier' => md5($this->server_addr),
                 'jobs' => $this->config->jobs_per_fire
             ]
         ]);
@@ -238,7 +238,7 @@ class Work extends Base
                 ],
                 'form_params' => [
                     'version' => $this->config->bot_version,
-                    'identifier' => md5($_SERVER['SERVER_ADDR']),
+                    'identifier' => md5($this->server_addr),
                     'data' => json_encode($completed)
                 ]
             ]);
