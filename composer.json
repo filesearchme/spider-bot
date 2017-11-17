@@ -1,0 +1,22 @@
+{
+    "name": "filesearchme/spider-bot", //naming our package
+    "description": "Spider bot for FileSearch.me", // Description about package
+    "keywords": ["filesearch", "filesearchme"], // Keywords
+    "type": "package", //Since it’s a package  we define its type package
+    "require": {
+        "guzzlehttp/guzzle": "~6.0",
+        "sunra/php-simple-html-dom-parser": "1.5.2"
+    },
+    "license": "MIT",
+    "authors": [{ //Your information
+        "name": "FileSearch.me",
+        "email": "filesearchme@gmail.com"
+    }],
+    "autoload": {
+        "psr-4": {
+            "SpiderBot\\" : "SpiderBot/"
+        }
+    }
+    "version": "1.0.0", //Version of the package
+    "minimum-stability": "stable" //Stability
+}
